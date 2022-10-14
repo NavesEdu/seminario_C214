@@ -1,8 +1,10 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
   datasource:
-    driverClassName: org.h2.driver
-    url: jdbc:h2:mem:forum
+    url: jdbc:h2:file:~/test
     username: sa
     password:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    driverClassName: org.h2.Driver
