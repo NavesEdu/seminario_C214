@@ -16,9 +16,19 @@ class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
     fun handleUserAlreadyExists(e: NotFoundException, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
-        error.setStatus(HttpStatus.BAD_REQUEST.value())
-        error.setError(HttpStatus.BAD_REQUEST.reasonPhrase)
+        error.setStatus(HttpStatus.NOT_FOUND.value())
+        error.setError(HttpStatus.NOT_FOUND.reasonPhrase)
         error.setMessage(e.localizedMessage)
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error)
+    }
+
+    @ExceptionHandler(value = [(ItemAlreadyExistException::class)])
+    fun handleUserAlreadyExists(e: ItemAlreadyExistException, request: WebRequest): ResponseEntity<StandardError> {
+        val error = StandardError()
+        error.setTimestamp(Instant.now().toString())
+        error.setStatus(HttpStatus.CONFLICT.value())
+        error.setError(HttpStatus.CONFLICT.reasonPhrase)
+        error.setMessage(e.localizedMessage)
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error)
     }
 }
