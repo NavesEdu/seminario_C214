@@ -31,4 +31,14 @@ class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
         error.setMessage(e.localizedMessage)
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error)
     }
+
+    @ExceptionHandler(value = [(FieldInvalidException::class)])
+    fun handleUserAlreadyExists(e: FieldInvalidException, request: WebRequest): ResponseEntity<StandardError> {
+        val error = StandardError()
+        error.setTimestamp(Instant.now().toString())
+        error.setStatus(HttpStatus.BAD_REQUEST.value())
+        error.setError(HttpStatus.BAD_REQUEST.reasonPhrase)
+        error.setMessage(e.localizedMessage)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error)
+    }
 }
