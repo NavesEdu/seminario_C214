@@ -79,7 +79,6 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.2, mixed mode, sharing)
 ```
 
 ### Kotlin (Linux)
-# Kotlin
 
 É necessário instalar o Java primeiro.
 
