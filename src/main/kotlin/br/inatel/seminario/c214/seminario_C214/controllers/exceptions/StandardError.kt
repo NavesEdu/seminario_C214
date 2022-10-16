@@ -2,7 +2,7 @@ package br.inatel.seminario.c214.seminario_C214.controllers.exceptions
 
 import java.io.Serializable
 
-class StandardError: Serializable {
+class StandardError : Serializable {
     private var timestamp: String? = null
     private var status: Int? = null
     private var error: String? = null
