@@ -1,12 +1,13 @@
 package br.inatel.seminario.c214.seminario_C214.Calculadora
 
-import Calculadora
+import br.inatel.seminario.c214.seminario_C214.components.Calculadora
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
 
 
-
-class CalculadoraTest{
+@SpringBootTest
+class CalculadoraTests{
 
     @Test
     fun `should sum 4 plus 9`(){
