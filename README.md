@@ -79,7 +79,6 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.2, mixed mode, sharing)
 ```
 
 ### Kotlin (Linux)
-# Kotlin
 
 É necessário instalar o Java primeiro.
 
@@ -110,7 +109,7 @@ Exemplo de resultado:
 Kotlin version 1.2.51-release-125 (JRE 1.8.0_191-8u191-b12-2ubuntu0.18.04.1-b12)
 ```
 ## 🛠️ Executando Localmente
-### Como executar com Intellj
+### Como executar com Intellij
 - Clone o projeto e importe para seu Intellj
 - Verifique se está utilizando o JDK 17 ou superior
 - Dentro de ``src/main/kotlin/br/inatel/seminario/c214/seminario_C214`` clique com botão direito sobre 
