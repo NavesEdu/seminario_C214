@@ -1,4 +1,4 @@
-package br.inatel.seminario.c214.seminario_C214.Calculadora
+package br.inatel.seminario.c214.seminario_C214.components
 
 import br.inatel.seminario.c214.seminario_C214.components.Calculadora
 import org.junit.jupiter.api.Assertions
