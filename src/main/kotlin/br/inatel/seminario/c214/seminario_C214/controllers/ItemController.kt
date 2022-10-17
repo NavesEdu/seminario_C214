@@ -2,6 +2,8 @@ package br.inatel.seminario.c214.seminario_C214.controllers
 
 import br.inatel.seminario.c214.seminario_C214.entities.Item
 import br.inatel.seminario.c214.seminario_C214.services.ItemService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,7 +20,7 @@ class ItemController(private val itemService: ItemService) {
         ResponseEntity.status(HttpStatus.CREATED).body(itemService.create(item));
 
     @GetMapping
-    fun getAllItem(): ResponseEntity<List<Item>> = ResponseEntity.ok().body(itemService.getAllItem());
+    fun getAllItem(): ResponseEntity<List<Item>> = ResponseEntity.ok().body(itemService.getAllItems());
 
     @GetMapping("/{id}")
     fun getAllItem(id: Long): Item = itemService.getById(id);

@@ -23,7 +23,7 @@ class ItemService(private val itemRepository: ItemRepository) {
     }
 
 
-    fun getAllItem(): List<Item> {
+    fun getAllItems(): List<Item> {
         val items: List<Item> = itemRepository.findAll();
 
         if (items.isEmpty())

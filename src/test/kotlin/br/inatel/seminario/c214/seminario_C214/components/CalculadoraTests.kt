@@ -1,6 +1,5 @@
 package br.inatel.seminario.c214.seminario_C214.components
 
-import br.inatel.seminario.c214.seminario_C214.components.Calculadora
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
