@@ -5,9 +5,11 @@ import br.inatel.seminario.c214.seminario_C214.repository.ItemRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.springframework.boot.test.context.SpringBootTest
+import org.webjars.NotFoundException
 
 @SpringBootTest
 class ItemServiceTest() {
@@ -56,6 +58,20 @@ class ItemServiceTest() {
         val actualList: List<Item> = this.itemService.getAllItems()
 
         assertEquals(expectedList, actualList)
+    }
+
+    @Test
+    fun testShouldThrowsExceptionWhenGetById(){
+        val id = 2L;
+        val name = "cafe expresso"
+        val desc = "cafe muito bão"
+        val price = 8.5F
+        val item: Item = Item(id, name, desc, price);
+
+        assertThrows<NotFoundException> {
+            var actualId = this.itemService.getById(2)
+        }
+
     }
 
     fun getItem(id: Long, name: String, desc: String, price: Float): Item{
