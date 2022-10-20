@@ -58,21 +58,29 @@ class ItemServiceTest() {
     fun testShouldThrowsExceptionWhenTryCreateItemWithBlankName() {
         val name: String = "";
         val item: Item = Item(1, name, "desc", 10.5F)
-        assertThrows<FieldInvalidException> {
+        val expectedMessage = "Campo nome não pode ser deixado em branco"
+
+        val exception = assertThrows<FieldInvalidException> {
             this.itemService.create(item)
         }
+
+        assertEquals(expectedMessage, exception.message)
     }
 
     @Test
     fun testShouldThrowsExceptionWhenTryCreateItemWithSameName() {
 
-        val item: Item = Item(1, "name", "desc", 10.5F)
+        val name: String = "Cafezin"
+        val item: Item = Item(1, name, "desc", 10.5F)
+        val expectedMessage = "Item com Nome [$name] já existe!"
 
         doThrow(DataIntegrityViolationException("")).`when`(itemRepository).save(item)
 
-        assertThrows<ItemAlreadyExistException> {
+        val exception = assertThrows<ItemAlreadyExistException> {
             this.itemService.create(item)
         }
+
+        assertEquals(expectedMessage, exception.message)
     }
 
     @Test
@@ -88,11 +96,15 @@ class ItemServiceTest() {
     @Test
     fun testShouldDoNotFindAnyItems() {
 
+        val expectedMessage = "Nenhum item encontrado!"
+
         `when`(this.itemRepository.findAll()).thenReturn(ArrayList<Item>())
 
-        assertThrows<NotFoundException> {
+        val exception = assertThrows<NotFoundException> {
             this.itemService.getAllItems()
         }
+
+        assertEquals(expectedMessage, exception.message)
     }
 
     @Test
@@ -110,9 +122,14 @@ class ItemServiceTest() {
     @Test
     fun testShouldThrowsExceptionWhenGetById() {
 
-        assertThrows<NotFoundException> {
-            this.itemService.getById(2)
+        val itemId: Long = 2L;
+        val expectedMessage = "Item com id [$itemId] não encontrado!"
+
+        val exception = assertThrows<NotFoundException> {
+            this.itemService.getById(itemId)
         }
+
+        assertEquals(expectedMessage, exception.message)
     }
 
     fun getItem(id: Long, name: String, desc: String, price: Float): Item {

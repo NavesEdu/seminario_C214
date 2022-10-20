@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import org.webjars.NotFoundException
@@ -16,6 +17,7 @@ import java.time.Instant
 class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [(NotFoundException::class)])
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handlerNotFound(e: Exception, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
@@ -26,6 +28,7 @@ class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(value = [(ItemAlreadyExistException::class)])
+    @ResponseStatus(HttpStatus.CONFLICT)
     fun handlerConflict(e: ItemAlreadyExistException, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
@@ -36,6 +39,7 @@ class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(value = [(FieldInvalidException::class)])
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handlerBadRequest(e: FieldInvalidException, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
