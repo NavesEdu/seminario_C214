@@ -1,15 +1,19 @@
 package br.inatel.seminario.c214.seminario_C214.services
 
+import br.inatel.seminario.c214.seminario_C214.controllers.exceptions.FieldInvalidException
+import br.inatel.seminario.c214.seminario_C214.controllers.exceptions.ItemAlreadyExistException
 import br.inatel.seminario.c214.seminario_C214.entities.Item
 import br.inatel.seminario.c214.seminario_C214.repository.ItemRepository
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.dao.DataIntegrityViolationException
 import org.webjars.NotFoundException
+import java.util.*
 
 @SpringBootTest
 class ItemServiceTest() {
@@ -34,7 +38,7 @@ class ItemServiceTest() {
     }
 
     @Test
-    fun `test Should Create New Item`(){
+    fun `test Should Create New Item`() {
         // Given
         val item: Item = getItem(ID_ITEM_1, NAME_ITEM_1, DESCRIPTION_ITEM_1, PRICE_ITEM_1)
 
@@ -51,7 +55,28 @@ class ItemServiceTest() {
     }
 
     @Test
-    fun `should Find All Items`(){
+    fun testShouldThrowsExceptionWhenTryCreateItemWithBlankName() {
+        val name: String = "";
+        val item: Item = Item(1, name, "desc", 10.5F)
+        assertThrows<FieldInvalidException> {
+            this.itemService.create(item)
+        }
+    }
+
+    @Test
+    fun testShouldThrowsExceptionWhenTryCreateItemWithSameName() {
+
+        val item: Item = Item(1, "name", "desc", 10.5F)
+
+        doThrow(DataIntegrityViolationException("")).`when`(itemRepository).save(item)
+
+        assertThrows<ItemAlreadyExistException> {
+            this.itemService.create(item)
+        }
+    }
+
+    @Test
+    fun `should Find All Items`() {
         `when`(this.itemRepository.findAll()).thenReturn(getAllItems())
 
         val expectedList: List<Item> = getAllItems()
@@ -61,18 +86,40 @@ class ItemServiceTest() {
     }
 
     @Test
-    fun testShouldThrowsExceptionWhenGetById(){
+    fun testShouldDoNotFindAnyItems() {
+
+        `when`(this.itemRepository.findAll()).thenReturn(ArrayList<Item>())
+
+        assertThrows<NotFoundException> {
+            this.itemService.getAllItems()
+        }
+    }
+
+    @Test
+    fun testShouldFindItemById() {
+
+        val item: Item = getItem(ID_ITEM_1, NAME_ITEM_1, DESCRIPTION_ITEM_1, PRICE_ITEM_1)
+
+        `when`(itemRepository.findById(ID_ITEM_1)).thenReturn(Optional.of(item))
+
+        val actualItem: Item = this.itemService.getById(ID_ITEM_1)
+
+        assertEquals(item, actualItem)
+    }
+
+    @Test
+    fun testShouldThrowsExceptionWhenGetById() {
 
         assertThrows<NotFoundException> {
             this.itemService.getById(2)
         }
     }
 
-    fun getItem(id: Long, name: String, desc: String, price: Float): Item{
+    fun getItem(id: Long, name: String, desc: String, price: Float): Item {
         return Item(id, name, desc, price)
     }
 
-    fun getAllItems(): List<Item>{
+    fun getAllItems(): List<Item> {
         val itemList: ArrayList<Item> = ArrayList()
         itemList.add(getItem(ID_ITEM_1, NAME_ITEM_1, DESCRIPTION_ITEM_1, PRICE_ITEM_1))
         itemList.add(getItem(ID_ITEM_2, NAME_ITEM_2, DESCRIPTION_ITEM_2, PRICE_ITEM_2))
