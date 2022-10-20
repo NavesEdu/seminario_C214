@@ -8,8 +8,6 @@ class StandardError : Serializable {
     private var error: String? = null
     private var message: String? = null
 
-    fun StandardError() {}
-
     fun getTimestamp(): String? {
         return timestamp
     }

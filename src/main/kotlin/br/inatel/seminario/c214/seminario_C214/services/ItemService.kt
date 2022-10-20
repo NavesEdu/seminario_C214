@@ -22,7 +22,6 @@ class ItemService(private val itemRepository: ItemRepository) {
         }
     }
 
-
     fun getAllItems(): List<Item> {
         val items: List<Item> = itemRepository.findAll();
 
@@ -40,14 +39,4 @@ class ItemService(private val itemRepository: ItemRepository) {
 
         return opItem.get();
     }
-
-    fun getByEmail(name: String): Item {
-        val opItem: Optional<Item> = itemRepository.findByName(name);
-
-        if (opItem.isEmpty)
-            throw NotFoundException("Item com nome [" + name + "] não encontrado!")
-
-        return opItem.get();
-    }
-
 }

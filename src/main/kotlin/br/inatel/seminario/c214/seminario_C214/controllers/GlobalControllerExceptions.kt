@@ -1,5 +1,8 @@
-package br.inatel.seminario.c214.seminario_C214.controllers.exceptions
+package br.inatel.seminario.c214.seminario_C214.controllers
 
+import br.inatel.seminario.c214.seminario_C214.controllers.exceptions.FieldInvalidException
+import br.inatel.seminario.c214.seminario_C214.controllers.exceptions.ItemAlreadyExistException
+import br.inatel.seminario.c214.seminario_C214.controllers.exceptions.StandardError
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -13,7 +16,7 @@ import java.time.Instant
 class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [(NotFoundException::class)])
-    fun handleUserAlreadyExists(e: NotFoundException, request: WebRequest): ResponseEntity<StandardError> {
+    fun handlerNotFound(e: Exception, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
         error.setStatus(HttpStatus.NOT_FOUND.value())
@@ -23,7 +26,7 @@ class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(value = [(ItemAlreadyExistException::class)])
-    fun handleUserAlreadyExists(e: ItemAlreadyExistException, request: WebRequest): ResponseEntity<StandardError> {
+    fun handlerConflict(e: ItemAlreadyExistException, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
         error.setStatus(HttpStatus.CONFLICT.value())
@@ -33,7 +36,7 @@ class GlobalControllerExceptions : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(value = [(FieldInvalidException::class)])
-    fun handleUserAlreadyExists(e: FieldInvalidException, request: WebRequest): ResponseEntity<StandardError> {
+    fun handlerBadRequest(e: FieldInvalidException, request: WebRequest): ResponseEntity<StandardError> {
         val error = StandardError()
         error.setTimestamp(Instant.now().toString())
         error.setStatus(HttpStatus.BAD_REQUEST.value())

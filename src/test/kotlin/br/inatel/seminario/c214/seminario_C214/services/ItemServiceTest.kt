@@ -62,16 +62,10 @@ class ItemServiceTest() {
 
     @Test
     fun testShouldThrowsExceptionWhenGetById(){
-        val id = 2L;
-        val name = "cafe expresso"
-        val desc = "cafe muito bão"
-        val price = 8.5F
-        val item: Item = Item(id, name, desc, price);
 
         assertThrows<NotFoundException> {
-            var actualId = this.itemService.getById(2)
+            this.itemService.getById(2)
         }
-
     }
 
     fun getItem(id: Long, name: String, desc: String, price: Float): Item{

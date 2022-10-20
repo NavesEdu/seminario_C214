@@ -1,7 +1,5 @@
 package br.inatel.seminario.c214.seminario_C214.components
 
-import java.lang.ArithmeticException
-
 class Calculadora {
 
     fun sum(num1: Int, num2: Int) = num1 + num2
@@ -11,11 +9,10 @@ class Calculadora {
     fun mult(num1: Int, num2: Int) = num1 * num2
 
     fun div(num1: Int, num2: Int): Int {
-        if(num2 ==0){
+        if (num2 == 0) {
             throw ArithmeticException()
-        }
-        else {
-            return num1/num2
+        } else {
+            return num1 / num2
         }
     }
 

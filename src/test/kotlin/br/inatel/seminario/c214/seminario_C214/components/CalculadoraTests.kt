@@ -26,7 +26,7 @@ class CalculadoraTests{
     }
 
     @Test
-    fun `should multiply 2 by 2`(){
+    fun `should multivlwsply 2 by 2`(){
         val calc = Calculadora()
         val result = calc.mult(2, 2)
         Assertions.assertEquals(4, result)
