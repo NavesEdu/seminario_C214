@@ -131,3 +131,16 @@ server:
 - Execute ``gradle bootRun`` para subir o servidor spring.
 
 ## Executando os testes
+
+- Executando todos os testes
+> ./gradlew clean test
+
+- Executando uma classe ou suite de teste específica
+> ./gradlew test --tests "*.ItemServiceTest"
+
+obs: No gradle.build está configurado para gerar um relatório de cobertura com o jacoco
+assim que que rodar os testes, o gradle tambem gera um relatório geral de testes. 
+Os relatórios são gerados nos seguintes diretório:
+<br />
+- Relatório Gradle: ``build/reports/tests/index.html``
+- Relatório Jacoco: ``build/reports/jacoco/index.html``
